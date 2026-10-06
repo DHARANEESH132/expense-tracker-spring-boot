@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - Expense Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">🚀</div>
+        <h2 class="auth-title">Create Account</h2>
+        <p class="auth-subtitle">Start tracking your personal finances today</p>
+      </div>
+
+      <div class="auth-body">
+        <div id="registerAlert" class="alert-banner alert-danger"></div>
+
+        <form id="registerForm">
+          <div class="form-group">
+            <label class="form-label" for="regName">Full Name</label>
+            <input
+              type="text"
+              id="regName"
+              class="form-input"
+              placeholder="e.g. Alex Morgan"
+              required
+              minlength="2"
+              maxlength="50"
+              autocomplete="name"
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regEmail">Email Address</label>
+            <input
+              type="email"
+              id="regEmail"
+              class="form-input"
+              placeholder="name@example.com"
+              required
+              autocomplete="email"
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regPassword">Password</label>
+            <div class="password-input-wrap">
+              <input
+                type="password"
+                id="regPassword"
+                class="form-input"
+                placeholder="At least 6 characters"
+                required
+                minlength="6"
+                autocomplete="new-password"
+              >
+              <button type="button" class="toggle-password" title="Toggle password visibility">👁️‍🗨️</button>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.35rem;">
+              Must contain at least 6 characters.
+            </div>
+          </div>
+
+          <button type="submit" id="btnRegister" class="btn btn-primary" style="width: 100%; padding: 0.75rem; margin-top: 0.5rem;">
+            Create Account
+          </button>
+        </form>
+
+        <p class="auth-footer-text">
+          Already have an account? <a href="login.html">Sign In</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      auth.redirectIfAuthenticated();
+
+      const form = document.getElementById('registerForm');
+      const btn = document.getElementById('btnRegister');
+      const alertBox = document.getElementById('registerAlert');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        alertBox.classList.remove('active');
+
+        const name = document.getElementById('regName').value.trim();
+        const email = document.getElementById('regEmail').value.trim();
+        const password = document.getElementById('regPassword').value;
+
+        if (password.length < 6) {
+          alertBox.className = 'alert-banner alert-danger active';
+          alertBox.textContent = 'Password must be at least 6 characters long.';
+          return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Creating Account...';
+
+        try {
+          const res = await api.post('/auth/register', { name, email, password });
+          auth.setSession(res.data.token, res.data.user);
+          window.location.href = 'dashboard.html';
+        } catch (err) {
+          alertBox.className = 'alert-banner alert-danger active';
+          alertBox.textContent = err.message || 'Registration failed.';
+          btn.disabled = false;
+          btn.textContent = 'Create Account';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

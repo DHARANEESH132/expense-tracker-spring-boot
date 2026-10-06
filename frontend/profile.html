@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile - Expense Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    .profile-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 2rem;
+    }
+    @media (max-width: 900px) {
+      .profile-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .profile-card {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+    }
+    .profile-large-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), #a855f7);
+      color: #fff;
+      font-size: 2.25rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">💰</div>
+        <div class="logo-text">ExpenseTracker</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="expenses.html" class="nav-link">
+          <span class="nav-icon">💳</span>
+          <span>Expenses</span>
+        </a>
+        <a href="budgets.html" class="nav-link">
+          <span class="nav-icon">🎯</span>
+          <span>Budgets</span>
+        </a>
+        <a href="profile.html" class="nav-link active">
+          <span class="nav-icon">👤</span>
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="avatar-circle">U</div>
+          <div class="user-info-text">
+            <div class="user-info-name">Loading...</div>
+            <div class="user-info-email">...</div>
+          </div>
+        </div>
+        <button class="btn-logout-icon btn-logout-action" title="Sign Out">🚪</button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-wrapper">
+      <header class="top-bar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="mobile-menu-btn" title="Toggle Sidebar">☰</button>
+          <div class="page-title">
+            <h1>Account Settings</h1>
+            <p>Manage your account profile and security credentials</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <div class="profile-layout">
+          <!-- User Summary Card -->
+          <div class="card profile-card">
+            <div class="profile-large-avatar avatar-circle">U</div>
+            <h2 id="profileCardName" style="font-size: 1.3rem; font-weight: 700; color: var(--text-main);">...</h2>
+            <p id="profileCardEmail" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">...</p>
+            <div id="profileCreatedAt" style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-light); border-top: 1px solid var(--border-color); padding-top: 1rem;">
+              Member since ...
+            </div>
+          </div>
+
+          <!-- Forms Section -->
+          <div style="display: flex; flex-direction: column; gap: 2rem;">
+            <!-- Profile Details Form -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Personal Information</h3>
+              </div>
+              <form id="profileForm">
+                <div class="form-group">
+                  <label class="form-label" for="profileName">Full Name</label>
+                  <input
+                    type="text"
+                    id="profileName"
+                    class="form-input"
+                    required
+                    minlength="2"
+                    maxlength="50"
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="profileEmail">Email Address</label>
+                  <input
+                    type="email"
+                    id="profileEmail"
+                    class="form-input"
+                    disabled
+                    style="background-color: var(--bg-main); cursor: not-allowed;"
+                  >
+                  <div style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.35rem;">
+                    Email address is tied to your login identity and cannot be changed.
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end;">
+                  <button type="submit" id="btnSaveProfile" class="btn btn-primary">
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Password Change Form -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Security & Password</h3>
+              </div>
+              <form id="passwordForm">
+                <div class="form-group">
+                  <label class="form-label" for="currentPassword">Current Password</label>
+                  <input
+                    type="password"
+                    id="currentPassword"
+                    class="form-input"
+                    required
+                    placeholder="Enter current password"
+                    autocomplete="current-password"
+                  >
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="newPassword">New Password</label>
+                    <input
+                      type="password"
+                      id="newPassword"
+                      class="form-input"
+                      required
+                      minlength="6"
+                      placeholder="Minimum 6 characters"
+                      autocomplete="new-password"
+                    >
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="confirmPassword">Confirm New Password</label>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      class="form-input"
+                      required
+                      minlength="6"
+                      placeholder="Re-enter new password"
+                      autocomplete="new-password"
+                    >
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end;">
+                  <button type="submit" id="btnChangePassword" class="btn btn-secondary">
+                    Update Password
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- App Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

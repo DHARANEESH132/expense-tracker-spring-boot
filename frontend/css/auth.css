@@ -1,0 +1,129 @@
+/* ==========================================================================
+   Expense Tracker - Authentication Views Styling
+   ========================================================================== */
+
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  padding: 1.5rem;
+}
+
+.auth-card {
+  background-color: #ffffff;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  width: 100%;
+  max-width: 440px;
+  overflow: hidden;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-header {
+  padding: 2.25rem 2rem 1.5rem;
+  text-align: center;
+}
+
+.auth-logo {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(135deg, var(--primary), #a855f7);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.4);
+}
+
+.auth-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.auth-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+.auth-body {
+  padding: 0 2rem 2rem;
+}
+
+.alert-banner {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+  display: none;
+}
+
+.alert-banner.active {
+  display: block;
+}
+
+.alert-danger {
+  background-color: var(--danger-light);
+  color: var(--danger-text);
+  border: 1px solid #fecaca;
+}
+
+.alert-success {
+  background-color: var(--success-light);
+  color: var(--success-text);
+  border: 1px solid #a7f3d0;
+}
+
+.password-input-wrap {
+  position: relative;
+}
+
+.password-input-wrap input {
+  padding-right: 2.5rem;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.toggle-password:hover {
+  color: var(--text-main);
+}
+
+.auth-footer-text {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 1.5rem;
+}
+
+.auth-footer-text a {
+  font-weight: 600;
+}

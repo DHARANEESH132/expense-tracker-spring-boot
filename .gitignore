@@ -1,0 +1,31 @@
+# Maven / Spring Boot
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Node
+node_modules/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# Environment / secrets
+.env
+*.env
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+# Local database files
+backend/data/

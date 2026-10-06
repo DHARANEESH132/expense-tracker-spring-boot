@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expenses - Expense Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">💰</div>
+        <div class="logo-text">ExpenseTracker</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="expenses.html" class="nav-link active">
+          <span class="nav-icon">💳</span>
+          <span>Expenses</span>
+        </a>
+        <a href="budgets.html" class="nav-link">
+          <span class="nav-icon">🎯</span>
+          <span>Budgets</span>
+        </a>
+        <a href="profile.html" class="nav-link">
+          <span class="nav-icon">👤</span>
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="avatar-circle">U</div>
+          <div class="user-info-text">
+            <div class="user-info-name">Loading...</div>
+            <div class="user-info-email">...</div>
+          </div>
+        </div>
+        <button class="btn-logout-icon btn-logout-action" title="Sign Out">🚪</button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-wrapper">
+      <header class="top-bar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="mobile-menu-btn" title="Toggle Sidebar">☰</button>
+          <div class="page-title">
+            <h1>Expense Management</h1>
+            <p>Filter, categorize, track, and export your personal transactions</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button id="btnExportCsv" class="btn btn-secondary">
+            <span>📥</span> Export CSV
+          </button>
+          <button class="btn btn-primary" onclick="openAddModal()">
+            <span>+</span> Add Expense
+          </button>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <!-- Filter & Search Bar -->
+        <section class="filter-bar">
+          <div class="filter-grid">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="filterSearch">Search</label>
+              <input
+                type="text"
+                id="filterSearch"
+                class="form-input"
+                placeholder="Search description or notes..."
+              >
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="filterCategory">Category</label>
+              <select id="filterCategory" class="form-select">
+                <option value="">All Categories</option>
+                <option value="Food">Food</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Housing">Housing</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Personal">Personal</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="filterPaymentMethod">Payment</label>
+              <select id="filterPaymentMethod" class="form-select">
+                <option value="">All Methods</option>
+                <option value="Cash">Cash</option>
+                <option value="Credit Card">Credit Card</option>
+                <option value="Debit Card">Debit Card</option>
+                <option value="UPI">UPI</option>
+                <option value="Net Banking">Net Banking</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="filterStartDate">From</label>
+              <input type="date" id="filterStartDate" class="form-input">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="filterEndDate">To</label>
+              <input type="date" id="filterEndDate" class="form-input">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="filterSort">Sort By</label>
+              <select id="filterSort" class="form-select">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="highest">Highest Amount</option>
+                <option value="lowest">Lowest Amount</option>
+              </select>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem;">
+              <button type="button" id="btnResetFilters" class="btn btn-secondary" title="Reset Filters">
+                Reset
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Expenses Data Table -->
+        <section class="card">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 120px;">Date</th>
+                  <th style="width: 140px;">Category</th>
+                  <th>Description</th>
+                  <th style="width: 140px;">Payment</th>
+                  <th style="width: 140px; text-align: right;">Amount</th>
+                  <th style="width: 110px; text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="expensesTableBody">
+                <!-- Dynamically Populated -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Container -->
+          <div class="pagination-container">
+            <div id="paginationInfo" class="pagination-info">Showing entries...</div>
+            <div class="pagination-buttons">
+              <button id="btnPrevPage" class="btn btn-sm btn-secondary" disabled>&larr; Previous</button>
+              <button id="btnNextPage" class="btn btn-sm btn-secondary" disabled>Next &rarr;</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add / Edit Expense Modal -->
+  <div id="expenseModalBackdrop" class="modal-backdrop">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="expenseModalTitle" class="modal-title">Add Expense</h3>
+        <button class="modal-close" onclick="closeExpenseModal()">&times;</button>
+      </div>
+
+      <form id="expenseForm">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="expenseAmount">Amount (₹) *</label>
+              <input
+                type="number"
+                id="expenseAmount"
+                class="form-input"
+                step="0.01"
+                min="0.01"
+                placeholder="0.00"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="expenseCategory">Category *</label>
+              <select id="expenseCategory" class="form-select" required>
+                <option value="" disabled selected>Select category</option>
+                <option value="Food">Food</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Housing">Housing</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Personal">Personal</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="expenseDescription">Description *</label>
+            <input
+              type="text"
+              id="expenseDescription"
+              class="form-input"
+              placeholder="e.g. Weekly grocery shopping"
+              required
+              maxlength="200"
+            >
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="expensePaymentMethod">Payment Method *</label>
+              <select id="expensePaymentMethod" class="form-select" required>
+                <option value="Cash">Cash</option>
+                <option value="Credit Card">Credit Card</option>
+                <option value="Debit Card">Debit Card</option>
+                <option value="UPI">UPI</option>
+                <option value="Net Banking">Net Banking</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="expenseDate">Date *</label>
+              <input type="date" id="expenseDate" class="form-input" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="expenseNotes">Notes (Optional)</label>
+            <textarea
+              id="expenseNotes"
+              class="form-textarea"
+              placeholder="Additional details, receipts, or comments..."
+              maxlength="500"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeExpenseModal()">Cancel</button>
+          <button type="submit" id="btnSaveExpense" class="btn btn-primary">Save Expense</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteModalBackdrop" class="modal-backdrop">
+    <div class="modal-content" style="max-width: 420px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: var(--danger);">Confirm Deletion</h3>
+        <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+          Are you sure you want to permanently delete this expense? This action cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+        <button type="button" id="btnConfirmDelete" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/expenses.js"></script>
+</body>
+</html>

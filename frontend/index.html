@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker - Smart Personal Finance</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .hero-section {
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background: radial-gradient(circle at top, #1e1b4b 0%, #0f172a 100%);
+      color: #fff;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 800px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: 1.15rem;
+      color: #94a3b8;
+      max-width: 600px;
+      margin-bottom: 2.25rem;
+      line-height: 1.6;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: -4rem auto 4rem;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+    .feature-card {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .feature-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+    .feature-text {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-badge">
+      <span>✨</span> Full-Stack Personal Finance & Analytics
+    </div>
+    <h1 class="hero-title">
+      Master your expenses with <span>precision & clarity</span>
+    </h1>
+    <p class="hero-desc">
+      Track spending, enforce category budgets, visualize financial trends, and export your transaction data with complete privacy and enterprise-grade security.
+    </p>
+    <div class="hero-cta" id="ctaContainer">
+      <a href="register.html" class="btn btn-primary" style="padding: 0.85rem 2rem; font-size: 1rem;">
+        Get Started Free
+      </a>
+      <a href="login.html" class="btn btn-secondary" style="padding: 0.85rem 2rem; font-size: 1rem; background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">
+        Sign In
+      </a>
+    </div>
+  </section>
+
+  <!-- Feature Cards -->
+  <section class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3 class="feature-title">Real-Time Analytics</h3>
+      <p class="feature-text">Interactive monthly trend charts and category breakdowns powered by dynamic MongoDB aggregations.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3 class="feature-title">Proactive Budgeting</h3>
+      <p class="feature-text">Set category-specific or overall monthly caps with automatic progress bars and threshold warnings.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3 class="feature-title">Multi-Tenant Isolation</h3>
+      <p class="feature-text">Strict ownership validation ensures your financial records remain completely private and inaccessible to other users.</p>
+    </div>
+  </section>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // If already logged in, show direct link to dashboard
+    if (auth.isAuthenticated()) {
+      const cta = document.getElementById('ctaContainer');
+      if (cta) {
+        cta.innerHTML = `
+          <a href="dashboard.html" class="btn btn-primary" style="padding: 0.85rem 2.25rem; font-size: 1rem;">
+            Go to Dashboard &rarr;
+          </a>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

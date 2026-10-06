@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budgets - Expense Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">💰</div>
+        <div class="logo-text">ExpenseTracker</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="expenses.html" class="nav-link">
+          <span class="nav-icon">💳</span>
+          <span>Expenses</span>
+        </a>
+        <a href="budgets.html" class="nav-link active">
+          <span class="nav-icon">🎯</span>
+          <span>Budgets</span>
+        </a>
+        <a href="profile.html" class="nav-link">
+          <span class="nav-icon">👤</span>
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="avatar-circle">U</div>
+          <div class="user-info-text">
+            <div class="user-info-name">Loading...</div>
+            <div class="user-info-email">...</div>
+          </div>
+        </div>
+        <button class="btn-logout-icon btn-logout-action" title="Sign Out">🚪</button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-wrapper">
+      <header class="top-bar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="mobile-menu-btn" title="Toggle Sidebar">☰</button>
+          <div class="page-title">
+            <h1>Budget Goals</h1>
+            <p>Set spending targets, track progress, and avoid overspending</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button class="btn btn-primary" onclick="openAddBudgetModal()">
+            <span>+</span> Create Budget
+          </button>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <!-- Period Selector Toolbar -->
+        <section class="card" style="margin-bottom: 2rem; padding: 1.25rem 1.5rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div style="font-weight: 600; font-size: 1.05rem;">
+              <span>Viewing Budgets For:</span>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+              <select id="selectPeriodMonth" class="form-select" style="width: 140px;">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+
+              <select id="selectPeriodYear" class="form-select" style="width: 110px;">
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- Budgets Cards Grid -->
+        <section id="budgetsCardsContainer" class="budgets-cards-grid">
+          <!-- Dynamically Populated -->
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Create / Edit Budget Modal -->
+  <div id="budgetModalBackdrop" class="modal-backdrop">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="budgetModalTitle" class="modal-title">Create Budget</h3>
+        <button class="modal-close" onclick="closeBudgetModal()">&times;</button>
+      </div>
+
+      <form id="budgetForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="budgetCategory">Target Category *</label>
+            <select id="budgetCategory" class="form-select" required>
+              <option value="All">Overall Monthly Budget (All Categories)</option>
+              <option value="Food">Food</option>
+              <option value="Transportation">Transportation</option>
+              <option value="Housing">Housing</option>
+              <option value="Utilities">Utilities</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Personal">Personal</option>
+              <option value="Other">Other</option>
+            </select>
+            <div style="font-size: 0.775rem; color: var(--text-light); margin-top: 0.35rem;">
+              Choose 'Overall Monthly Budget' to cap total spending or select a specific category.
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="budgetMonth">Month *</label>
+              <select id="budgetMonth" class="form-select" required>
+                <option value="1">1 - January</option>
+                <option value="2">2 - February</option>
+                <option value="3">3 - March</option>
+                <option value="4">4 - April</option>
+                <option value="5">5 - May</option>
+                <option value="6">6 - June</option>
+                <option value="7">7 - July</option>
+                <option value="8">8 - August</option>
+                <option value="9">9 - September</option>
+                <option value="10">10 - October</option>
+                <option value="11">11 - November</option>
+                <option value="12">12 - December</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="budgetYear">Year *</label>
+              <input
+                type="number"
+                id="budgetYear"
+                class="form-input"
+                min="2000"
+                max="2100"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="budgetAmount">Monthly Limit (₹) *</label>
+            <input
+              type="number"
+              id="budgetAmount"
+              class="form-input"
+              step="1"
+              min="1"
+              placeholder="e.g. 15000"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeBudgetModal()">Cancel</button>
+          <button type="submit" id="btnSaveBudget" class="btn btn-primary">Save Budget</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Budget Confirmation Modal -->
+  <div id="deleteBudgetModalBackdrop" class="modal-backdrop">
+    <div class="modal-content" style="max-width: 420px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: var(--danger);">Delete Budget</h3>
+        <button class="modal-close" onclick="closeDeleteBudgetModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+          Are you sure you want to delete this budget goal? Your recorded expenses will not be affected.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeDeleteBudgetModal()">Cancel</button>
+        <button type="button" id="btnConfirmDeleteBudget" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/budgets.js"></script>
+</body>
+</html>
